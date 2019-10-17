@@ -3,11 +3,10 @@ package com.codeoftheweb.salvo;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
+import javax.persistence.*;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Set;
 
 
 @Entity
@@ -16,23 +15,28 @@ public class Player {
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
 
-
-
     private long id;
-    private String userName;
+    private String email;
 
-    public Player() {
-    }
+    @OneToMany(mappedBy="player", fetch=FetchType.EAGER)
+    Set<GamePlayer> gamePlayers;
 
-    public Player(String username) {
-        this.userName = username;
-    }
+    public Player() { }
 
-    public String getUserName() {
-        return userName;
-    }
+public Player(String email) { this.email = email; }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+public String getEmail() { return email; }
+
+public void setEmail(String email) { this.email = email; }
+
+public long getId() {return id; }
+
+public void setId(long id) { this.id = id; }
+
+    Map<String, Object> makePlayerDTO() {
+        Map<String, Object> dto = new LinkedHashMap<>();
+        dto.put("id",this.getId());
+        dto.put("email", this.getEmail());
+        return dto;
     }
 }
