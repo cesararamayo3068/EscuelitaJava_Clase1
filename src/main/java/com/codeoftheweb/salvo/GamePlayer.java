@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 @Entity
 public class GamePlayer {
@@ -22,6 +23,9 @@ public class GamePlayer {
     private Game game;
     private LocalDateTime gameCreation;
 
+    //Relacione la entidad GamePlayer de uno a muchos con la Entidad Ship
+    @OneToMany(mappedBy="gamePlayer", fetch=FetchType.EAGER)
+    Set<Ship> ships;
 
     public GamePlayer(){}
     public GamePlayer(Game game , Player player){
@@ -61,6 +65,10 @@ public class GamePlayer {
 
     public void setGameCreation(LocalDateTime gameCreation) {
         this.gameCreation = gameCreation;
+    }
+
+    public Set<Ship> getShips() {
+        return ships;
     }
 
     Map<String, Object> makeGamePlayerDTO() {

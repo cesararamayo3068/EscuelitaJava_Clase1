@@ -17,21 +17,27 @@ public class Player {
 
     private long id;
     private String email;
-
+    //El jugador tiene una relación de  uno a muchos  con  GamePlayer
     @OneToMany(mappedBy="player", fetch=FetchType.EAGER)
     Set<GamePlayer> gamePlayers;
 
+
+
     public Player() { }
 
-public Player(String email) { this.email = email; }
+    public Player(String email) { this.email = email; }
 
-public String getEmail() { return email; }
+    public String getEmail() { return email; }
 
-public void setEmail(String email) { this.email = email; }
+    public void setEmail(String email) { this.email = email; }
 
-public long getId() {return id; }
+    public long getId() {return id; }
 
-public void setId(long id) { this.id = id; }
+    public Set<GamePlayer> getGamePlayers() {
+        return gamePlayers;
+    }
+
+    public void setId(long id) { this.id = id; }
 
     Map<String, Object> makePlayerDTO() {
         Map<String, Object> dto = new LinkedHashMap<>();
@@ -39,4 +45,5 @@ public void setId(long id) { this.id = id; }
         dto.put("email", this.getEmail());
         return dto;
     }
+
 }

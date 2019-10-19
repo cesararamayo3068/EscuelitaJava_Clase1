@@ -18,6 +18,7 @@ public class Game {
     private long idGame;
     private LocalDateTime gameCreation  =  LocalDateTime.now();
 
+    //El juego tiene una relación de  uno a muchos  con  GamePlayer
     @OneToMany(mappedBy="game", fetch=FetchType.EAGER)
     Set<GamePlayer> gamePlayers;
 
@@ -55,7 +56,7 @@ public class Game {
     }
 
     Map<String, Object> makeGameDTO() {
-        Map<String, Object> dto = new LinkedHashMap<String, Object>();
+        Map<String, Object> dto = new LinkedHashMap<>();
         dto.put("id", this.getIdGame());
         dto.put("created", this.getGameCreation());
         dto.put("gamePlayers",this.getGamePlayers().stream().map(gamePlayer -> gamePlayer.makeGamePlayerDTO()).collect(Collectors.toList()));
