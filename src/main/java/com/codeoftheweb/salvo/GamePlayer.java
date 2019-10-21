@@ -27,6 +27,10 @@ public class GamePlayer {
     @OneToMany(mappedBy="gamePlayer", fetch=FetchType.EAGER)
     Set<Ship> ships;
 
+    //Relacione la entidad GamePlayer de uno a muchos con la Entidad Salvo
+    @OneToMany(mappedBy="gamePlayer", fetch=FetchType.EAGER)
+    Set<Salvo> salvos;
+
     public GamePlayer(){}
     public GamePlayer(Game game , Player player){
         this.game = game;
@@ -81,4 +85,7 @@ public class GamePlayer {
         return dto;
         }
 
+    public Set<Salvo> getSalvos() {
+        return salvos;
+    }
 }

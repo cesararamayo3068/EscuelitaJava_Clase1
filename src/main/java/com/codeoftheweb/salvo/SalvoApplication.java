@@ -18,7 +18,7 @@ public class SalvoApplication {
 
 
     @Bean
-    public CommandLineRunner initData(PlayerRepository repository, GameRepository repositoryJuego, GamePlayerRepository gameplayerRep,ShipRepository shiprepository) {
+    public CommandLineRunner initData(PlayerRepository repository, GameRepository repositoryJuego, GamePlayerRepository gameplayerRep,ShipRepository shiprepository,SalvoRepository salvoRepository) {
         return (args) -> {
 
             Player jugador1 =new Player("j.bauer@ctu.gov");
@@ -74,12 +74,16 @@ public class SalvoApplication {
             Ship barco1 = new Ship("crucero", Arrays.asList("A1", "A2", "A3"),gamePlayer1);
             Ship barco2 = new Ship("destructor", Arrays.asList("B1", "B2", "B3"),gamePlayer1);
             Ship barco3 = new Ship("acorazado", Arrays.asList("C1", "C2", "C3"),gamePlayer1);
-            Ship barco4 = new Ship("crucero", Arrays.asList("A1", "A2", "A3"),gamePlayer2);
-            Ship barco5 = new Ship("destructor", Arrays.asList("B1", "B2", "B3"),gamePlayer2);
-            Ship barco6 = new Ship("acorazado", Arrays.asList("C1", "C2", "C3"),gamePlayer2);
+            Ship barco4 = new Ship("crucero", Arrays.asList("A6", "A7", "A8"),gamePlayer2);
+            Ship barco5 = new Ship("destructor", Arrays.asList("E1", "E2", "E3"),gamePlayer2);
+            Ship barco6 = new Ship("acorazado", Arrays.asList("F1", "F2", "F3"),gamePlayer2);
 
-
-
+            Salvo salvo1=new Salvo(1,Arrays.asList("H3", "C9", "A5"),gamePlayer1);
+            Salvo salvo2=new Salvo(2,Arrays.asList("H2", "C6", "A8"),gamePlayer2);
+            Salvo salvo3=new Salvo(3,Arrays.asList("H4", "B2", "A1"),gamePlayer3);
+            Salvo salvo4=new Salvo(4,Arrays.asList("B6", "C6", "A7"),gamePlayer4);
+            Salvo salvo5=new Salvo(5,Arrays.asList("H2", "C4", "A5"),gamePlayer5);
+            Salvo salvo6=new Salvo(6,Arrays.asList("H3", "B4", "A2"),gamePlayer6);
 
             repository.save(jugador1);
             repository.save(jugador2);
@@ -122,6 +126,12 @@ public class SalvoApplication {
             shiprepository.save(barco5);
             shiprepository.save(barco6);
 
+            salvoRepository.save(salvo1);
+            salvoRepository.save(salvo2);
+            salvoRepository.save(salvo3);
+            salvoRepository.save(salvo4);
+            salvoRepository.save(salvo5);
+            salvoRepository.save(salvo6);
 
         };
     }

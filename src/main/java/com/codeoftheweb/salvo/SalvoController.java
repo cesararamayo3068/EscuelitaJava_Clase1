@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
         Dto.put("created",gamePlayer.getGame().getGameCreation());
         Dto.put("gamePlayers",gamePlayer.getGame().getGamePlayers().stream().map(game-> game.makeGamePlayerDTO()).collect(Collectors.toList()));
         Dto.put ("ships",gamePlayer.getShips().stream().map(game-> game.makeShipDTO()).collect(Collectors.toList()));
-
+        Dto.put("salvoes",gamePlayer.getGame().getGamePlayers().stream().map(gamePlayer1->gamePlayer1.getSalvos()).flatMap(salvo->salvo.stream().map(s->s.makeSalvoDTO())));
         return Dto;
 
 
