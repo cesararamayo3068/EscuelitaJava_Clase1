@@ -4,10 +4,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
@@ -18,8 +15,13 @@ import java.util.stream.Collectors;
     private GameRepository gameRepository;
 
     @RequestMapping("/games")
-    public List<Map<String,Object>> getAll() {
-        return gameRepository.findAll().stream().map(game -> game.makeGameDTO()).collect(Collectors.toList());
+    public Map<String,Object> getid() {
+        Map<String , Object> Dto=new LinkedHashMap<>();
+        Dto.put("player","Guest");
+//        Dto.put("games",gameRepository.findAll().stream().map(game -> game.makeGameDTO()).collect(Collectors.toList()));
+        Dto.put("games",gameRepository.findAll().stream().map(game -> game.makeGameDTO()).collect(Collectors.toList()));
+        return Dto;
+
 
 
     }

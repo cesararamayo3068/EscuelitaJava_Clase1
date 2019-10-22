@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @Entity
@@ -21,7 +22,8 @@ public class Game {
     //El juego tiene una relación de  uno a muchos  con  GamePlayer
     @OneToMany(mappedBy="game", fetch=FetchType.EAGER)
     Set<GamePlayer> gamePlayers;
-
+    @OneToMany(mappedBy="game", fetch=FetchType.EAGER)
+    Set<Score> score;
 
     public Set<GamePlayer> getGamePlayers() {
         return gamePlayers;
@@ -37,6 +39,10 @@ public class Game {
     public Game(LocalDateTime gameCreation) {
         this.gameCreation = gameCreation;
 
+    }
+
+    public Set<Score> getScore() {
+        return score;
     }
 
     public LocalDateTime getGameCreation() {
@@ -60,7 +66,10 @@ public class Game {
         dto.put("id", this.getIdGame());
         dto.put("created", this.getGameCreation());
         dto.put("gamePlayers",this.getGamePlayers().stream().map(gamePlayer -> gamePlayer.makeGamePlayerDTO()).collect(Collectors.toList()));
+        dto.put("scores",this.getScore().stream().map(score1 -> score1.makeScoreDTO()).collect(Collectors.toList()));
+
         return dto;
+
     }
 
 }

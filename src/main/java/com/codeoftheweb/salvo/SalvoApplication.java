@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
+import java.util.Date;
 
 @SpringBootApplication
 public class SalvoApplication {
@@ -18,7 +19,7 @@ public class SalvoApplication {
 
 
     @Bean
-    public CommandLineRunner initData(PlayerRepository repository, GameRepository repositoryJuego, GamePlayerRepository gameplayerRep,ShipRepository shiprepository,SalvoRepository salvoRepository) {
+    public CommandLineRunner initData(PlayerRepository repository, GameRepository repositoryJuego, GamePlayerRepository gameplayerRep,ShipRepository shiprepository,SalvoRepository salvoRepository,ScoreRepository scoreRepository) {
         return (args) -> {
 
             Player jugador1 =new Player("j.bauer@ctu.gov");
@@ -37,6 +38,7 @@ public class SalvoApplication {
             Game juego7=new Game();
             Game juego8 =new Game();
 
+            Date fecha=new Date();
 
             juego1.setGameCreation(LocalDateTime.parse("2018-02-17T15:20:15", DateTimeFormatter.ISO_LOCAL_DATE_TIME));
             juego2.setGameCreation(LocalDateTime.parse("2018-02-17T16:20:15", DateTimeFormatter.ISO_LOCAL_DATE_TIME));
@@ -84,6 +86,13 @@ public class SalvoApplication {
             Salvo salvo4=new Salvo(4,Arrays.asList("B6", "C6", "A7"),gamePlayer4);
             Salvo salvo5=new Salvo(5,Arrays.asList("H2", "C4", "A5"),gamePlayer5);
             Salvo salvo6=new Salvo(6,Arrays.asList("H3", "B4", "A2"),gamePlayer6);
+
+            Score score1= new Score(juego1,jugador1,1.0,fecha);
+            Score score2= new Score(juego1,jugador5,0.5,fecha);
+            Score score3= new Score(juego5,jugador3,0.0,fecha);
+            Score score4= new Score(juego3,jugador2,1.0,fecha);
+            Score score5= new Score(juego2,jugador2,0.5,fecha);
+            Score score6= new Score(juego4,jugador4,1.0,fecha);
 
             repository.save(jugador1);
             repository.save(jugador2);
@@ -133,6 +142,12 @@ public class SalvoApplication {
             salvoRepository.save(salvo5);
             salvoRepository.save(salvo6);
 
+            scoreRepository .save(score1);
+            scoreRepository .save(score2);
+            scoreRepository .save(score3);
+            scoreRepository .save(score4);
+            scoreRepository .save(score5);
+            scoreRepository .save(score6);
         };
     }
 }
