@@ -1,4 +1,4 @@
-package com.codeoftheweb.salvo;
+package com.codeoftheweb.salvo.models;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -45,7 +45,7 @@ import java.util.Map;
     private List<String> shiplocation = new ArrayList<>();
 
 
-    Map<String, Object> makeShipDTO() {
+    public Map<String, Object> makeShipDTO() {
 
         Map<String, Object> dto = new LinkedHashMap<>();
         dto.put("type", this.getTipo());

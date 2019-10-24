@@ -1,4 +1,4 @@
-package com.codeoftheweb.salvo;
+package com.codeoftheweb.salvo.models;
 
 
 import org.hibernate.annotations.GenericGenerator;
@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @Entity
@@ -61,7 +60,7 @@ public class Game {
         this.gameCreation = gameCreation;
     }
 
-    Map<String, Object> makeGameDTO() {
+    public Map<String, Object> makeGameDTO() {
         Map<String, Object> dto = new LinkedHashMap<>();
         dto.put("id", this.getIdGame());
         dto.put("created", this.getGameCreation());

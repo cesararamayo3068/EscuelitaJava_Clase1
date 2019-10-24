@@ -1,4 +1,4 @@
-package com.codeoftheweb.salvo;
+package com.codeoftheweb.salvo.models;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -58,7 +58,7 @@ public class Salvo {
         return salvolocation;
     }
 
-    Map<String, Object> makeSalvoDTO() {
+    public Map<String, Object> makeSalvoDTO() {
 
         Map<String, Object> dto = new LinkedHashMap<>();
         dto.put("turn", this.getTurno());

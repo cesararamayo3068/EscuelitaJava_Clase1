@@ -1,11 +1,10 @@
-package com.codeoftheweb.salvo;
+package com.codeoftheweb.salvo.models;
 
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 //@Entity crea una clase como entidad (Tabla de una BD)
@@ -60,7 +59,7 @@ public class Score {
         return finish_date;
     }
 
-    Map<String, Object> makeScoreDTO() {
+   public  Map<String, Object> makeScoreDTO() {
 
         Map<String, Object> dto = new LinkedHashMap<>();
         dto.put("player", this.getPlayer().getId());
