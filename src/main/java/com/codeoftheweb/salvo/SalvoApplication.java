@@ -109,11 +109,11 @@ public class SalvoApplication {
 
 
             Ship ship1 = new Ship("crucero", Arrays.asList("A1", "A2", "A3"),gamePlayer1);
-            Ship ship2 = new Ship("Destroyer", Arrays.asList("B1", "B2", "B3"),gamePlayer1);
-            Ship ship3 = new Ship("Submarine", Arrays.asList("C1", "C2", "C3"),gamePlayer1);
-            Ship ship4 = new Ship("crucero", Arrays.asList("A6", "A7", "A8"),gamePlayer2);
-            Ship ship5 = new Ship("destructor", Arrays.asList("E1", "E2", "E3"),gamePlayer2);
-            Ship ship6 = new Ship("acorazado", Arrays.asList("F1", "F2", "F3"),gamePlayer2);
+            Ship ship2 = new Ship("CARRIER", Arrays.asList("B1", "B2", "B3"),gamePlayer1);
+            Ship ship3 = new Ship("SUBMARINE", Arrays.asList("C1", "C2", "C3"),gamePlayer1);
+            Ship ship4 = new Ship("BATTLESHIP", Arrays.asList("A6", "A7", "A8"),gamePlayer2);
+            Ship ship5 = new Ship("DESTROYER", Arrays.asList("E1", "E2", "E3"),gamePlayer2);
+            Ship ship6 = new Ship("PATROL BOAT", Arrays.asList("F1", "F2", "F3"),gamePlayer2);
 
             Salvo salvo1=new Salvo(1,Arrays.asList("H3", "C9", "A5"),gamePlayer1);
             Salvo salvo2=new Salvo(2,Arrays.asList("H2", "C6", "A8"),gamePlayer2);
@@ -215,6 +215,8 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/web/**").permitAll()
                 //
                 .antMatchers("/api/*").permitAll()
+                .antMatchers("/h2-console/**").permitAll()
+
                 .antMatchers("/**").hasAuthority("USER")
                 .and()
                 .formLogin();

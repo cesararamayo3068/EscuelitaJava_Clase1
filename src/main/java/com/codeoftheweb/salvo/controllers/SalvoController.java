@@ -1,4 +1,5 @@
 package com.codeoftheweb.salvo.controllers;
+import com.codeoftheweb.salvo.models.Game;
 import com.codeoftheweb.salvo.models.GamePlayer;
 import com.codeoftheweb.salvo.models.Player;
 import com.codeoftheweb.salvo.repositories.GamePlayerRepository;
@@ -27,7 +28,7 @@ import java.util.stream.Collectors;
     private PlayerRepository playerRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
-
+    Date fecha= new Date();
     private boolean isGuest(Authentication authentication) {
         return authentication == null || authentication instanceof AnonymousAuthenticationToken;
     }
@@ -44,23 +45,64 @@ import java.util.stream.Collectors;
                 .map(game -> game.makeGameDTO())
                 .collect(Collectors.toList()));
         return dto;
+    }
+        @RequestMapping(path ="/games", method = RequestMethod.POST)
 
-
+    public ResponseEntity<Object> newGame(
+            Authentication authentication) {
+        if (isGuest(authentication)) {
+            return new ResponseEntity<>(makeMap("error", "No estas autorizado"), HttpStatus.UNAUTHORIZED);
+        }
+        Player player = playerRepository.findByuserName(authentication.getName());
+        if (player == null) {
+            return new ResponseEntity<>(makeMap("error", "Datos perdidos"), HttpStatus.FORBIDDEN);
+        }
+        Game game = gameRepository.save(new Game());
+        GamePlayer gamePlayer = gameplayerRepository.save(new GamePlayer( game, player));
+        return new ResponseEntity<>(makeMap("gpid", gamePlayer.getIdGamePlayer()), HttpStatus.CREATED);
     }
 
-    @RequestMapping("/game_view/{nn}")
-    public Map<String,Object> getAll(@PathVariable long nn) {
-        GamePlayer gamePlayer=gameplayerRepository.findById(nn).get();
-        Map<String,Object> Dto =new LinkedHashMap<>();
-        Dto.put("id",gamePlayer.getGame().getIdGame());
-        Dto.put("created",gamePlayer.getGame().getGameCreation());
-        Dto.put("gamePlayers",gamePlayer.getGame().getGamePlayers().stream().map(game-> game.makeGamePlayerDTO()).collect(Collectors.toList()));
-        Dto.put ("ships",gamePlayer.getShips().stream().map(game-> game.makeShipDTO()).collect(Collectors.toList()));
-        Dto.put("salvoes",gamePlayer.getGame().getGamePlayers().stream().map(gamePlayer1->gamePlayer1.getSalvos()).flatMap(salvo->salvo.stream().map(s->s.makeSalvoDTO())));
-        return Dto;
 
 
-}
+    @RequestMapping(path = "/game_view/{idn}", method = RequestMethod.GET)
+    public ResponseEntity<Map<String, Object>> createUser(Authentication authentication, @PathVariable long idn) {
+        if (isGuest(authentication)) {
+            return new ResponseEntity<>(makeMap("Error", "No estas autorizado"), HttpStatus.UNAUTHORIZED);
+        }
+        GamePlayer gamePlayer = gameplayerRepository.findById(idn).get();
+        Player player = playerRepository.findByuserName(authentication.getName());
+        if (player == null) {
+            return new ResponseEntity<>(makeMap("Error", "No estas autorizado"), HttpStatus.UNAUTHORIZED);
+        }
+        if (gamePlayer == null) {
+            return new ResponseEntity<>(makeMap("Error", "No estas autorizado"), HttpStatus.UNAUTHORIZED);
+        }
+        if (gamePlayer.getPlayer().equals(player)) {
+            return new ResponseEntity<>(makeMapDto(idn), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(makeMap("Error", "No estas autorizado"), HttpStatus.UNAUTHORIZED);
+    }
+    private Map<String, Object> makeMapDto(long idPlayerRepository) {
+        GamePlayer gamePlayer = gameplayerRepository.findById(idPlayerRepository).get();
+        Map<String, Object> dto = new LinkedHashMap<>();
+
+        dto.put("id", gamePlayer.getGame().getIdGame());
+        dto.put("created", gamePlayer.getGame().getGameCreation());
+        dto.put("gameState", "PLACESHIPS");
+        dto.put("gamePlayers", gamePlayer.getGame().getGamePlayers().stream().map(gamePlayer1 -> gamePlayer1.makeGamePlayerDTO()).collect(Collectors.toList()));
+        dto.put("ships", gamePlayer.getShips().stream().map(gamePlayer1 -> gamePlayer1.makeShipDTO()).collect(Collectors.toList()));
+        dto.put("salvoes", gamePlayer.getGame().getGamePlayers().stream().map(gamePlayer1 -> gamePlayer1.getSalvos()).flatMap(salvos -> salvos.stream().map(salvo -> salvo.makeSalvoDTO())));
+        dto.put("hits", this.makeMapDtoOBJ());
+        return dto;
+    }
+    private Map<String, Object> makeMapDtoOBJ() {
+        Map<String, Object> obj = new HashMap<>();
+        obj.put("self", new ArrayList<String>());
+        obj.put("opponent", new ArrayList<String>());
+        return obj;
+    }
+
+
     @RequestMapping(path = "/players", method = RequestMethod.POST)
     public ResponseEntity<Map<String, Object>> createplayer(@RequestParam String email,@RequestParam String password ) {
         if (email.isEmpty()) {
