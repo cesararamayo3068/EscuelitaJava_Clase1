@@ -82,7 +82,29 @@ import java.util.stream.Collectors;
         }
         return new ResponseEntity<>(makeMap("Error", "No estas autorizado"), HttpStatus.UNAUTHORIZED);
     }
-    private Map<String, Object> makeMapDto(long idPlayerRepository) {
+    @RequestMapping(path = "/game/{id}/players", method = RequestMethod.POST)
+    public ResponseEntity<Map<String, Object>> joinGame(Authentication authentication, @PathVariable long id) {
+        Player player = playerRepository.findByuserName(authentication.getName());
+        Game game = gameRepository.findById(id).get();
+
+        if (isGuest(authentication)) {
+            return new ResponseEntity<>(makeMap("Error", "No estas autorizado"), HttpStatus.UNAUTHORIZED);
+        }
+
+        if (game == null) {
+            return new ResponseEntity<>(makeMap("error", "No existe el juego"), HttpStatus.FORBIDDEN);
+        }
+        if (game.getGamePlayers().size() > 1) {
+            return new ResponseEntity<>(makeMap("error", "El juego esta lleno"), HttpStatus.FORBIDDEN);
+        }
+        GamePlayer gamePlayer1= gameplayerRepository.save(new GamePlayer(game,player));
+        return new ResponseEntity<>(makeMap("gpid", gamePlayer1.getIdGamePlayer()), HttpStatus.CREATED);
+    }
+
+
+
+
+        private Map<String, Object> makeMapDto(long idPlayerRepository) {
         GamePlayer gamePlayer = gameplayerRepository.findById(idPlayerRepository).get();
         Map<String, Object> dto = new LinkedHashMap<>();
 
