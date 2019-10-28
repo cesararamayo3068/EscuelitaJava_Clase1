@@ -24,6 +24,12 @@ public class Salvo {
     //declara un juego de un jugador
     private GamePlayer gamePlayer;
 
+    @ElementCollection
+    //@Column le asigna un nombre a la columna de la tabla
+    @Column(name = "salvolocation")
+    // Crea la lista de ubicaciones de los salvos en un String y los almacena en un array vacio
+    private List<String> salvolocation = new ArrayList<>();
+    //constructor vacio
     //numero de turno
     private long turno;
 
@@ -40,12 +46,6 @@ public class Salvo {
     }
 
 
-    @ElementCollection
-    //@Column le asigna un nombre a la columna de la tabla
-    @Column(name = "salvolocation")
-    // Crea la lista de ubicaciones de los salvos en un String y los almacena en un array vacio
-    private List<String> salvolocation = new ArrayList<>();
- //constructor vacio
     public long getTurno() {
         return turno;
     }
@@ -70,6 +70,24 @@ public class Salvo {
 
     }
 
+    public long getIdsalvo() {
+        return idsalvo;
+    }
 
+    public void setIdsalvo(long idsalvo) {
+        this.idsalvo = idsalvo;
+    }
+
+    public void setGamePlayer(GamePlayer gamePlayer) {
+        this.gamePlayer = gamePlayer;
+    }
+
+    public void setSalvolocation(List<String> salvolocation) {
+        this.salvolocation = salvolocation;
+    }
+
+    public void setTurno(long turno) {
+        this.turno = turno;
+    }
 }
 
