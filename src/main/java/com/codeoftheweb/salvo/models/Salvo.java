@@ -7,87 +7,57 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 //@Entity crea una clase como entidad (Tabla de una BD)
 @Entity
 public class Salvo {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native") //ANOTACION QUE GENERA VALOR AUTOMATICO AL ID
     @GenericGenerator(name = "native", strategy = "native")
-    //Id generada por la BD
-    private long idsalvo;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    // @JoinColumn dice qué columna tiene el ID del propietario
-    @JoinColumn(name = "gamePlayer_id")
-    // Atributo que almacena el Un  juego de jugador
-    //declara un juego de un jugador
-    private GamePlayer gamePlayer;
-
+    private Long id;
     @ElementCollection
-    //@Column le asigna un nombre a la columna de la tabla
-    @Column(name = "salvolocation")
-    // Crea la lista de ubicaciones de los salvos en un String y los almacena en un array vacio
-    private List<String> salvolocation = new ArrayList<>();
-    //constructor vacio
-    //numero de turno
-    private long turno;
-
-    //Creo el constructor vacio
+    @Column(name="locations")
+    private List<String> locations= new ArrayList<>();
+    private int turn;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="gamePlayer_id")
+    private GamePlayer gamePlayer;
     public Salvo() {
     }
-
-    public Salvo(long turno,List<String> salvolocation,GamePlayer gamePlayer) {
-        this.turno = turno;
-        this.salvolocation = salvolocation;
-
-        this.gamePlayer=gamePlayer;
-
+    public Salvo( int turn,List<String> locations,GamePlayer gamePlayer ) {
+        this.gamePlayer = gamePlayer;
+        this.locations = locations;
+        this.turn = turn;
     }
-
-
-    public long getTurno() {
-        return turno;
+    public Long getId() {
+        return id;
     }
-
     public GamePlayer getGamePlayer() {
         return gamePlayer;
     }
-
-    public List<String> getSalvolocation() {
-        return salvolocation;
+    public List<String> getLocations() {
+        return locations;
     }
-
-    public Map<String, Object> makeSalvoDTO() {
-
-        Map<String, Object> dto = new LinkedHashMap<>();
-        dto.put("turn", this.getTurno());
-        dto.put("player", gamePlayer.getPlayer().getId());
-        dto.put("locations", this.getSalvolocation());
-
-        return dto;
-
-
+    public int getTurn() {
+        return turn;
     }
-
-    public long getIdsalvo() {
-        return idsalvo;
-    }
-
-    public void setIdsalvo(long idsalvo) {
-        this.idsalvo = idsalvo;
-    }
-
     public void setGamePlayer(GamePlayer gamePlayer) {
         this.gamePlayer = gamePlayer;
     }
-
-    public void setSalvolocation(List<String> salvolocation) {
-        this.salvolocation = salvolocation;
+    public void setLocations(List<String> locations) {
+        this.locations = locations;
     }
-
-    public void setTurno(long turno) {
-        this.turno = turno;
+    public void setTurn(int turn) {
+        this.turn = turn;
+    }
+    public Map<String, Object> makeSalvoDTO() {
+        Map<String, Object> dto = new LinkedHashMap<>();
+        dto.put("turn",this.turn);
+        dto.put("player",gamePlayer.getPlayer().getId());
+        dto.put("locations", this.getLocations().stream().collect(Collectors.toList()));
+        return dto;
     }
 }
+
 
