@@ -218,7 +218,7 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/*").permitAll()
                 .antMatchers("/h2-console/**").permitAll()
 
-                .antMatchers("/**").hasAuthority("USER")
+                .antMatchers("/**").permitAll()
                 .and()
                 .formLogin();
         http.formLogin()
