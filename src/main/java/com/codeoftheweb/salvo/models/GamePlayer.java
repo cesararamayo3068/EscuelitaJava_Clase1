@@ -25,18 +25,20 @@ public class GamePlayer {
     private LocalDateTime gameCreation;
 
     //Relacione la entidad GamePlayer de uno a muchos con la Entidad Ship
-    @OneToMany(mappedBy="gamePlayer", fetch=FetchType.EAGER)
+    @OneToMany(mappedBy = "gamePlayer", fetch = FetchType.EAGER)
     Set<Ship> ships;
 
     //Relacione la entidad GamePlayer de uno a muchos con la Entidad Salvo
-    @OneToMany(mappedBy="gamePlayer", fetch=FetchType.EAGER)
+    @OneToMany(mappedBy = "gamePlayer", fetch = FetchType.EAGER)
     Set<Salvo> salvos;
 
-    public GamePlayer(){}
-    public GamePlayer(Game game , Player player){
+    public GamePlayer() {
+    }
+
+    public GamePlayer(Game game, Player player) {
         this.game = game;
         this.player = player;
-        gameCreation= LocalDateTime.now();
+        gameCreation = LocalDateTime.now();
 
     }
 
@@ -55,6 +57,7 @@ public class GamePlayer {
     }
 
     public void setPlayer(Player player) {
+
         this.player = player;
     }
 
@@ -69,6 +72,7 @@ public class GamePlayer {
     }
 
     public LocalDateTime getGameCreation() {
+
         return gameCreation;
     }
 
@@ -93,15 +97,15 @@ public class GamePlayer {
     }
 
 
-
-        public List<String> getshiplocations(){
-         List <String> shlocation=this.getShips().stream().map(ship -> ship.getLocations()).flatMap(locations->locations.stream()).collect(Collectors.toList());
+    public List<String> getshiplocations() {
+        List<String> shlocation = this.getShips().stream().map(ship -> ship.getLocations()).flatMap(locations -> locations.stream()).collect(Collectors.toList());
 
         return shlocation;
 
-        }
+    }
 
     public Set<Salvo> getSalvos() {
+
         return salvos;
     }
 

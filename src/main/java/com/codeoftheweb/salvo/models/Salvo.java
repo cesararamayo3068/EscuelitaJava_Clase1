@@ -15,7 +15,7 @@ public class Salvo {
     private Long id;
     @ElementCollection
     @Column(name = "locations")
-    private List<String> locations = new ArrayList<>();
+    private List<String> salvoLocations = new ArrayList<>();
     private int turn;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "gamePlayer_id")
@@ -26,20 +26,23 @@ public class Salvo {
 
     public Salvo(int turn, List<String> locations, GamePlayer gamePlayer) {
         this.gamePlayer = gamePlayer;
-        this.locations = locations;
+        this.salvoLocations = locations;
         this.turn = turn;
     }
 
     public Long getId() {
+
         return id;
     }
 
     public GamePlayer getGamePlayer() {
+
         return gamePlayer;
     }
 
-    public List<String> getLocations() {
-        return locations;
+    public List<String> getSalvoLocations() {
+
+        return salvoLocations;
     }
 
     public int getTurn() {
@@ -50,11 +53,13 @@ public class Salvo {
         this.gamePlayer = gamePlayer;
     }
 
-    public void setLocations(List<String> locations) {
-        this.locations = locations;
+    public void setSalvoLocations(List<String> salvoLocations) {
+
+        this.salvoLocations = salvoLocations;
     }
 
     public void setTurn(int turn) {
+
         this.turn = turn;
     }
 
@@ -62,7 +67,7 @@ public class Salvo {
         Map<String, Object> dto = new LinkedHashMap<>();
         dto.put("turn", this.turn);
         dto.put("player", gamePlayer.getPlayer().getId());
-        dto.put("locations", this.getLocations().stream().collect(Collectors.toList()));
+        dto.put("locations", this.getSalvoLocations().stream().collect(Collectors.toList()));
         return dto;
 
 
@@ -77,11 +82,11 @@ public class Salvo {
         Integer submarinehits = 0;
         Integer patrolboathits = 0;
         Integer missed = 0;
-        int carrier=0;
-        int battleship=0;
-        int destroyer=0;
-        int submarine=0;
-        int patrolboat=0;
+        int carrier = 0;
+        int battleship = 0;
+        int destroyer = 0;
+        int submarine = 0;
+        int patrolboat = 0;
 
 
         List<String> hitLocations = new ArrayList<>();
@@ -89,18 +94,18 @@ public class Salvo {
         Salvo salvo = opponent
                 .getSalvos()
                 .stream()
-                .filter(salvo1 -> salvo1.getTurn() == this.getTurn()).findAny().orElse(null);
+                .filter(salvo1 -> salvo1.getTurn() == this.getTurn()).findFirst().orElse(null);
 
-        missed = salvo.getLocations().size();
+        missed = salvo.getSalvoLocations().size();
 
-        for(String positionSalvo : salvo.getLocations()) {
+        for (String positionSalvo : salvo.getSalvoLocations()) {
             for (Ship ship : self.getShips()) {
                 for (String positionShip : ship.getLocations()) {
                     if (positionSalvo.contains(positionShip)) {
 
                         hitLocations.add(positionSalvo);
 
-                        switch (ship.getType().toLowerCase()){
+                        switch (ship.getType().toLowerCase()) {
                             case "carrier":
                                 carrierhits++;
                                 missed--;
@@ -133,11 +138,11 @@ public class Salvo {
                 .stream()
                 .filter(salvo1 -> salvo1.getTurn() <= this.getTurn()).collect(Collectors.toList());
 
-        for(Salvo salvo1 : salvos) {
-            for (String positionSalvo : salvo1.getLocations()) {
+        for (Salvo salvo1 : salvos) {
+            for (String positionSalvo : salvo1.getSalvoLocations()) {
                 for (Ship ship : self.getShips()) {
                     for (String positionShip : ship.getLocations()) {
-                        if (positionSalvo.contains(positionShip)) {
+                        if (positionSalvo.equals(positionShip)) {
 
 
                             switch (ship.getType().toLowerCase()) {
@@ -178,13 +183,13 @@ public class Salvo {
 
         Map<String, Object> selfs = new LinkedHashMap<>();
         selfs.put("turn", this.getTurn());
-        selfs.put("hitLocations",hitLocations);
+        selfs.put("hitLocations", hitLocations);
         selfs.put("damages", damages);
-        selfs.put("missed",missed);
+        selfs.put("missed", missed);
         return selfs;
     }
 
-    public List<String> getShipLocation (GamePlayer gamePlayer) {
+    public List<String> getShipLocation(GamePlayer gamePlayer) {
         List<String> shipLocations = new ArrayList<>();
         shipLocations = gamePlayer.getShips()
                 .stream()
@@ -196,4 +201,4 @@ public class Salvo {
     }
 
 
-    }
+}

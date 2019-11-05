@@ -38,17 +38,17 @@ public class SalvosController {
         return map;
     }
 
-    @RequestMapping(value="/games/players/{gamePlayerId}/salvos", method = RequestMethod.POST)
+    @RequestMapping(value="/games/players/{gamePlayerId}/salvoes", method = RequestMethod.POST)
     public ResponseEntity<Map<String,Object>> addSalvos(Authentication authentication, @PathVariable long gamePlayerId, @RequestBody Salvo salvo) {
+
         GamePlayer gamePlayer = gameplayerRepository.findById(gamePlayerId).get();
         Player player = playerRepository.findByuserName(authentication.getName());
 
         if (isGuest(authentication)||gamePlayer == null||!(gamePlayer.getPlayer().equals(player))) {
             return new ResponseEntity<>(makeMap("Error", "No estas autorizado"), HttpStatus.UNAUTHORIZED);
         }
-        if (gamePlayer.getSalvos().size()>salvo.getTurn()){
-            return new ResponseEntity<>(makeMap("Error", "ya disparaste en este turno "), HttpStatus.FORBIDDEN);
-        }
+
+        salvo.setTurn(gamePlayer.getSalvos().size()+1);
         salvo.setGamePlayer(gamePlayer);
         salvoRepository.save(salvo);
         return new ResponseEntity<>(makeMap("OK", "salvos creados"), HttpStatus.CREATED);

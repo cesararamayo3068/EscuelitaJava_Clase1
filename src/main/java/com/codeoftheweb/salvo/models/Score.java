@@ -3,6 +3,7 @@ package com.codeoftheweb.salvo.models;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -35,16 +36,19 @@ public class Score {
 
    private Double score;
 
+   private LocalDateTime  finish_date;
+
     public Player getPlayer() {
+
         return player;
     }
 
-    private Date finish_date= new Date();
+
 
     public Score() {
     }
 
-    public Score(Game game, Player player, Double score, Date finish_date) {
+    public Score(Game game, Player player, Double score, LocalDateTime finish_date) {
         this.game = game;
         this.player = player;
         this.score = score;
@@ -55,7 +59,8 @@ public class Score {
         return score;
     }
 
-    public Date getFinish_date() {
+    public LocalDateTime getFinish_date() {
+
         return finish_date;
     }
 

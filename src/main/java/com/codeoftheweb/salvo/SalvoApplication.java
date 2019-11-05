@@ -55,136 +55,135 @@ public class SalvoApplication {
         return (args) -> {
 
 
-            Player player1 =new Player("j.bauer@ctu.gov");
-            Player player2 =new Player("t.almeida@ctu.gov");
-             Player player3 =new Player("c.obrian@ctu.gov");
-             Player player4 =new Player("d.palmer@whitehouse.gov");
-             Player player5 =new Player("kim_bauer@gmail.com");
-             player1.setPassword(passwordEncoder().encode("123"));
-            player2.setPassword(passwordEncoder().encode("1234"));
-
-
-             Game game1 = new Game();
-            Game game2 = new Game();
-            Game game3 = new Game();
-            Game game4= new Game();
-            Game game5 =new Game();
-            Game game6 = new Game();
-            Game game7=new Game();
-            Game game8 =new Game();
-
-            Date fecha=new Date();
-
-            game1.setGameCreation(LocalDateTime.parse("2018-02-17T15:20:15", DateTimeFormatter.ISO_LOCAL_DATE_TIME));
-            game2.setGameCreation(LocalDateTime.parse("2018-02-17T16:20:15", DateTimeFormatter.ISO_LOCAL_DATE_TIME));
-            game3.setGameCreation(LocalDateTime.parse("2018-02-17T17:20:15", DateTimeFormatter.ISO_LOCAL_DATE_TIME));
-            game4.setGameCreation(LocalDateTime.parse("2018-02-17T18:20:15", DateTimeFormatter.ISO_LOCAL_DATE_TIME));
-            game5.setGameCreation(LocalDateTime.parse("2018-02-17T19:20:15", DateTimeFormatter.ISO_LOCAL_DATE_TIME));
-            game6.setGameCreation(LocalDateTime.parse("2018-02-17T20:20:15", DateTimeFormatter.ISO_LOCAL_DATE_TIME));
-            game7.setGameCreation(LocalDateTime.parse("2018-02-17T19:20:15", DateTimeFormatter.ISO_LOCAL_DATE_TIME));
-            game8.setGameCreation(LocalDateTime.parse("2018-02-17T20:20:15", DateTimeFormatter.ISO_LOCAL_DATE_TIME));
-
-            GamePlayer gamePlayer1=new GamePlayer(game1,player1);
-            GamePlayer gamePlayer2=new GamePlayer(game1,player2);
-
-            GamePlayer gamePlayer3=new GamePlayer(game2,player1);
-            GamePlayer gamePlayer4=new GamePlayer(game2,player2);
-
-            GamePlayer gamePlayer5=new GamePlayer(game3,player3);
-            GamePlayer gamePlayer6=new GamePlayer(game3,player2);
-
-            GamePlayer gamePlayer7=new GamePlayer(game4,player3);
-            GamePlayer gamePlayer8=new GamePlayer(game4,player1);
-
-            GamePlayer gamePlayer9=new GamePlayer(game5,player2);
-            GamePlayer gamePlayer10=new GamePlayer(game5,player1);
-
-            GamePlayer gamePlayer11=new GamePlayer(game6,player5);
-
-            GamePlayer gamePlayer12=new GamePlayer(game7,player2);
-
-            GamePlayer gamePlayer13=new GamePlayer(game8,player5);
-            GamePlayer gamePlayer14=new GamePlayer(game8,player2);
-
-
-
-            Ship ship1 = new Ship("carrier", Arrays.asList("A1", "A2", "A3"),gamePlayer1);
-            Ship ship2 = new Ship("submarine", Arrays.asList("B1", "B2", "B3"),gamePlayer1);
-            Ship ship3 = new Ship("submarine", Arrays.asList("C1", "C2", "C3"),gamePlayer1);
-            Ship ship4 = new Ship("battleship", Arrays.asList("A6", "A7", "A8"),gamePlayer2);
-            Ship ship5 = new Ship("destroyer", Arrays.asList("E1", "E2", "E3"),gamePlayer2);
-            Ship ship6 = new Ship("patrolboat", Arrays.asList("F1", "F2", "F3"),gamePlayer2);
-
-            Salvo salvo1=new Salvo(1,Arrays.asList("H3", "C9", "A5"),gamePlayer1);
-            Salvo salvo7=new Salvo(1,Arrays.asList("A1", "A2", "A3"),gamePlayer2);
-            Salvo salvo2=new Salvo(2,Arrays.asList("H2", "C6", "A8"),gamePlayer2);
-            Salvo salvo3=new Salvo(3,Arrays.asList("H4", "B2", "A1"),gamePlayer3);
-            Salvo salvo4=new Salvo(4,Arrays.asList("B6", "C6", "A7"),gamePlayer4);
-            Salvo salvo5=new Salvo(5,Arrays.asList("H2", "C4", "A5"),gamePlayer5);
-            Salvo salvo6=new Salvo(6,Arrays.asList("H3", "B4", "A2"),gamePlayer6);
-
-            Score score1= new Score(game1,player1,1.0,fecha);
-            Score score2= new Score(game1,player5,0.5,fecha);
-            Score score3= new Score(game5,player3,0.0,fecha);
-            Score score4= new Score(game3,player2,1.0,fecha);
-            Score score5= new Score(game2,player2,0.5,fecha);
-            Score score6= new Score(game4,player4,1.0,fecha);
-
-            repository.save(player1);
-            repository.save(player2);
-            repository.save(player3);
-            repository.save(player4);
-            repository.save(player5);
-
-
-
-            repositoryJuego.save(game1);
-            repositoryJuego.save(game2);
-            repositoryJuego.save(game3);
-            repositoryJuego.save(game4);
-            repositoryJuego.save(game5);
-            repositoryJuego.save(game6);
-            repositoryJuego.save(game7);
-            repositoryJuego.save(game8);
-
-            gameplayerRep.save(gamePlayer1);
-            gameplayerRep.save(gamePlayer2);
-            gameplayerRep.save(gamePlayer3);
-            gameplayerRep.save(gamePlayer4);
-            gameplayerRep.save(gamePlayer5);
-            gameplayerRep.save(gamePlayer6);
-            gameplayerRep.save(gamePlayer7);
-            gameplayerRep.save(gamePlayer8);
-            gameplayerRep.save(gamePlayer9);
-            gameplayerRep.save(gamePlayer10);
-            gameplayerRep.save(gamePlayer11);
-            gameplayerRep.save(gamePlayer12);
-            gameplayerRep.save(gamePlayer13);
-            gameplayerRep.save(gamePlayer14);
-
-
-
-            shiprepository.save(ship1);
-            shiprepository.save(ship2);
-            shiprepository.save(ship3);
-            shiprepository.save(ship4);
-            shiprepository.save(ship5);
-            shiprepository.save(ship6);
-
-            salvoRepository.save(salvo1);
-            salvoRepository.save(salvo2);
-            salvoRepository.save(salvo3);
-            salvoRepository.save(salvo4);
-            salvoRepository.save(salvo5);
-            salvoRepository.save(salvo6);
-            salvoRepository.save(salvo7);
-
-            scoreRepository .save(score1);
-            scoreRepository .save(score2);
-            scoreRepository .save(score3);
-            scoreRepository .save(score4);
-            scoreRepository .save(score5);
-            scoreRepository .save(score6);
+//            Player player1 =new Player("j.bauer@ctu.gov");
+//            Player player2 =new Player("t.almeida@ctu.gov");
+//             Player player3 =new Player("c.obrian@ctu.gov");
+//             Player player4 =new Player("d.palmer@whitehouse.gov");
+//             Player player5 =new Player("kim_bauer@gmail.com");
+//             player1.setPassword(passwordEncoder().encode("123"));
+//            player2.setPassword(passwordEncoder().encode("1234"));
+//
+//
+//             Game game1 = new Game();
+//            Game game2 = new Game();
+//            Game game3 = new Game();
+//            Game game4= new Game();
+//            Game game5 =new Game();
+//            Game game6 = new Game();
+//            Game game7=new Game();
+//            Game game8 =new Game();
+//
+//
+//            game1.setGameCreation(LocalDateTime.parse("2018-02-17T15:20:15", DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+//            game2.setGameCreation(LocalDateTime.parse("2018-02-17T16:20:15", DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+//            game3.setGameCreation(LocalDateTime.parse("2018-02-17T17:20:15", DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+//            game4.setGameCreation(LocalDateTime.parse("2018-02-17T18:20:15", DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+//            game5.setGameCreation(LocalDateTime.parse("2018-02-17T19:20:15", DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+//            game6.setGameCreation(LocalDateTime.parse("2018-02-17T20:20:15", DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+//            game7.setGameCreation(LocalDateTime.parse("2018-02-17T19:20:15", DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+//            game8.setGameCreation(LocalDateTime.parse("2018-02-17T20:20:15", DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+//
+//            GamePlayer gamePlayer1=new GamePlayer(game1,player1);
+//            GamePlayer gamePlayer2=new GamePlayer(game1,player2);
+//
+//            GamePlayer gamePlayer3=new GamePlayer(game2,player1);
+//            GamePlayer gamePlayer4=new GamePlayer(game2,player2);
+//
+//            GamePlayer gamePlayer5=new GamePlayer(game3,player3);
+//            GamePlayer gamePlayer6=new GamePlayer(game3,player2);
+//
+//            GamePlayer gamePlayer7=new GamePlayer(game4,player3);
+//            GamePlayer gamePlayer8=new GamePlayer(game4,player1);
+//
+//            GamePlayer gamePlayer9=new GamePlayer(game5,player2);
+//            GamePlayer gamePlayer10=new GamePlayer(game5,player1);
+//
+//            GamePlayer gamePlayer11=new GamePlayer(game6,player5);
+//
+//            GamePlayer gamePlayer12=new GamePlayer(game7,player2);
+//
+//            GamePlayer gamePlayer13=new GamePlayer(game8,player5);
+//            GamePlayer gamePlayer14=new GamePlayer(game8,player2);
+//
+//
+//
+//            Ship ship1 = new Ship("carrier", Arrays.asList("A1", "A2", "A3"),gamePlayer1);
+//            Ship ship2 = new Ship("submarine", Arrays.asList("B1", "B2", "B3"),gamePlayer1);
+//            Ship ship3 = new Ship("submarine", Arrays.asList("C1", "C2", "C3"),gamePlayer1);
+//            Ship ship4 = new Ship("battleship", Arrays.asList("A6", "A7", "A8"),gamePlayer2);
+//            Ship ship5 = new Ship("destroyer", Arrays.asList("E1", "E2", "E3"),gamePlayer2);
+//            Ship ship6 = new Ship("patrolboat", Arrays.asList("F1", "F2", "F3"),gamePlayer2);
+//
+//            Salvo salvo1=new Salvo(1,Arrays.asList("H3", "C9", "A5"),gamePlayer1);
+//            Salvo salvo7=new Salvo(1,Arrays.asList("A1", "A2", "A3"),gamePlayer2);
+//            Salvo salvo2=new Salvo(2,Arrays.asList("H2", "C6", "A8"),gamePlayer2);
+//            Salvo salvo3=new Salvo(3,Arrays.asList("H4", "B2", "A1"),gamePlayer3);
+//            Salvo salvo4=new Salvo(4,Arrays.asList("B6", "C6", "A7"),gamePlayer4);
+//            Salvo salvo5=new Salvo(5,Arrays.asList("H2", "C4", "A5"),gamePlayer5);
+//            Salvo salvo6=new Salvo(6,Arrays.asList("H3", "B4", "A2"),gamePlayer6);
+//
+//            Score score1= new Score(game1,player1,1.0,LocalDateTime.now());
+//            Score score2= new Score(game1,player5,0.5,LocalDateTime.now());
+//            Score score3= new Score(game5,player3,0.0,LocalDateTime.now());
+//            Score score4= new Score(game3,player2,1.0,LocalDateTime.now());
+//            Score score5= new Score(game2,player2,0.5,LocalDateTime.now());
+//            Score score6= new Score(game4,player4,1.0,LocalDateTime.now());
+//
+//            repository.save(player1);
+//            repository.save(player2);
+//            repository.save(player3);
+//            repository.save(player4);
+//            repository.save(player5);
+//
+//
+//
+//            repositoryJuego.save(game1);
+//            repositoryJuego.save(game2);
+//            repositoryJuego.save(game3);
+//            repositoryJuego.save(game4);
+//            repositoryJuego.save(game5);
+//            repositoryJuego.save(game6);
+//            repositoryJuego.save(game7);
+//            repositoryJuego.save(game8);
+//
+//            gameplayerRep.save(gamePlayer1);
+//            gameplayerRep.save(gamePlayer2);
+//            gameplayerRep.save(gamePlayer3);
+//            gameplayerRep.save(gamePlayer4);
+//            gameplayerRep.save(gamePlayer5);
+//            gameplayerRep.save(gamePlayer6);
+//            gameplayerRep.save(gamePlayer7);
+//            gameplayerRep.save(gamePlayer8);
+//            gameplayerRep.save(gamePlayer9);
+//            gameplayerRep.save(gamePlayer10);
+//            gameplayerRep.save(gamePlayer11);
+//            gameplayerRep.save(gamePlayer12);
+//            gameplayerRep.save(gamePlayer13);
+//            gameplayerRep.save(gamePlayer14);
+//
+//
+//
+//            shiprepository.save(ship1);
+//            shiprepository.save(ship2);
+//            shiprepository.save(ship3);
+//            shiprepository.save(ship4);
+//            shiprepository.save(ship5);
+//            shiprepository.save(ship6);
+//
+//            salvoRepository.save(salvo1);
+//            salvoRepository.save(salvo2);
+//            salvoRepository.save(salvo3);
+//            salvoRepository.save(salvo4);
+//            salvoRepository.save(salvo5);
+//            salvoRepository.save(salvo6);
+//            salvoRepository.save(salvo7);
+//
+//            scoreRepository .save(score1);
+//            scoreRepository .save(score2);
+//            scoreRepository .save(score3);
+//            scoreRepository .save(score4);
+//            scoreRepository .save(score5);
+//            scoreRepository .save(score6);
 
 
         };
