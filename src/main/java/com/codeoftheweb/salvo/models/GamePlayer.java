@@ -4,9 +4,9 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+
+import java.util.stream.Collectors;
 
 @Entity
 public class GamePlayer {
@@ -18,6 +18,7 @@ public class GamePlayer {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "player_id")
     private Player player;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "game_id")
     private Game game;
@@ -40,10 +41,12 @@ public class GamePlayer {
     }
 
     public long getIdGamePlayer() {
+
         return idGamePlayer;
     }
 
     public void setIdGamePlayer(long idGamePlayer) {
+
         this.idGamePlayer = idGamePlayer;
     }
 
@@ -56,10 +59,12 @@ public class GamePlayer {
     }
 
     public Game getGame() {
+
         return game;
     }
 
     public void setGame(Game game) {
+
         this.game = game;
     }
 
@@ -68,24 +73,36 @@ public class GamePlayer {
     }
 
     public void setGameCreation(LocalDateTime gameCreation) {
+
         this.gameCreation = gameCreation;
     }
 
     public Set<Ship> getShips() {
+
         return ships;
     }
 
     public Map<String, Object> makeGamePlayerDTO() {
 
-            Map<String, Object> dto = new LinkedHashMap<>();
-            dto.put("id", this.getIdGamePlayer());
-            dto.put("player", this.player.makePlayerDTO());
+        Map<String, Object> dto = new LinkedHashMap<>();
+        dto.put("id", this.getIdGamePlayer());
+        dto.put("player", this.player.makePlayerDTO());
 
 
         return dto;
+    }
+
+
+
+        public List<String> getshiplocations(){
+         List <String> shlocation=this.getShips().stream().map(ship -> ship.getLocations()).flatMap(locations->locations.stream()).collect(Collectors.toList());
+
+        return shlocation;
+
         }
 
     public Set<Salvo> getSalvos() {
         return salvos;
     }
+
 }
